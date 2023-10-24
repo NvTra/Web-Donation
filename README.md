@@ -18,5 +18,5 @@ Dự án Quyên góp từ thiện là một nền tảng giúp bạn dễ dàng 
 - Ngôn ngữ lập trình: Java
 - Framework: Spring MVC, Hibernate, Themeleaf, Lombok
 - Cơ sở dữ liệu: MySQL
-- Giao diện người dùng: HTML, CSS, JavaScript, Thymeleaf
+- Giao diện người dùng: HTML, CSS, JavaScript
 - Công cụ Quản lý Phiên bản: Git
