@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tranv.webdonation.dao.UserDAO;
+import com.tranv.webdonation.dto.CreaterUserDTO;
 import com.tranv.webdonation.entity.User;
 
 @Service
@@ -16,8 +17,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void saveUser(User user) {
-		userDAO.saveUser(user);
+	public void saveUser(CreaterUserDTO userDTO) {
+		userDAO.saveUser(userDTO);
 	}
 
 	@Override
@@ -35,13 +36,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void updateUser(User user) {
-		userDAO.saveUser(user);
+		userDAO.updateUser(user);
 	}
 
 	@Override
 	@Transactional
 	public void deleteUser(int userId) {
 		userDAO.deleteUser(userId);
+	}
+
+	@Override
+	@Transactional
+	public void lockUser(int userId) {
+		userDAO.lockUser(userId);
 	}
 
 }

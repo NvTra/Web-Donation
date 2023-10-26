@@ -61,7 +61,7 @@
 		<property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
 		<!-- ENTER YOUR DATABASE -->
 		<property name="jdbcUrl"
-			value="jdbc:mysql://localhost:3306/web_donation_asm01?useSSL=false&amp;serverTimezone=Asia/Ho_Chi_Minh&amp;useUnicode=yes&amp;characterEncoding=UTF-8" />
+			value="jdbc:mysql://localhost:3306/web_donation_asm01?allowPublicKeyRetrieval=true&amp;useSSL=false&amp;serverTimezone=Asia/Ho_Chi_Minh&amp;useUnicode=yes&amp;characterEncoding=UTF-8" />
 		<!-- ENTER YOUR ACCOUNT -->
 		<property name="user" value="admin" />
 		<property name="password" value="admin" />
