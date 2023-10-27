@@ -7,13 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tranv.webdonation.dto.CreaterUserDTO;
+import com.tranv.webdonation.entity.Donation;
 import com.tranv.webdonation.entity.Role;
 import com.tranv.webdonation.entity.User;
+import com.tranv.webdonation.service.DonationService;
 import com.tranv.webdonation.service.RoleService;
 import com.tranv.webdonation.service.UserService;
 
@@ -25,9 +28,12 @@ public class AdminController {
 	@Autowired
 	private RoleService roleService;
 
+	@Autowired
+	private DonationService donationService;
+
 	@RequestMapping("/")
 	public String adminHome() {
-		return "/admin/home";
+		return "admin/home";
 	}
 
 // Admin Manager
@@ -67,8 +73,40 @@ public class AdminController {
 
 //	Donation Manager
 	@RequestMapping("/donation")
-	public String listDonation() {
+	public String listDonation(Model model) {
+		List<Donation> getDonations = donationService.findAll();
+		model.addAttribute("donations", getDonations);
 		return "admin/donation";
 	}
 
+	@PostMapping("/createDonation")
+	public String createDonation(@ModelAttribute("newDonation") Donation donation) {
+		donationService.saveDonation(donation);
+		return "redirect:/admin/donation";
+	}
+
+	@GetMapping("/detailDonation/{donationId}")
+	public String detailDonation(@PathVariable("donationId") int donationId, Model model) {
+		Donation donation = donationService.findById(donationId);
+		model.addAttribute("donation", donation);
+		return "admin/detail";
+	}
+
+	@PostMapping("/updateDonation")
+	public String updateDonation(@ModelAttribute("donation") Donation donation) {
+		donationService.updateDonation(donation);
+		return "redirect:/admin/donation";
+	}
+
+	@GetMapping("/deleteDonation")
+	public String deleteDonation(@RequestParam("donationId") int donationId) {
+		donationService.deleteDonation(donationId);
+		return "redirect:/admin/donation";
+	}
+
+	@GetMapping("/updateStatus")
+	public String updateStatus(@RequestParam("donationId") int donationId) {
+		donationService.updateStatus(donationId);
+		return "redirect:/admin/donation";
+	}
 }

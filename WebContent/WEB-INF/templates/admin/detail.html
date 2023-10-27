@@ -9,15 +9,16 @@
   <meta name="author" content="" />
   <title>Quản trị</title>
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-  <link href="../../static/admin1/assets/css/styles.css" rel="stylesheet" />
+  <link rel="stylesheet" th:href="@{/resources/static/admin1/assets/css/styles.css}" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
           crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
           crossorigin="anonymous"></script>
-  <script src="../../static/admin1/assets/js/scripts.js"></script>
+          <script th:src="@{/resources/static/admin1/assets/js/scripts.js}"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 
-  <script src="../../static/admin1/assets/js/datatables-simple-demo.js"></script>
+	<script th:src="@{/resources/static/admin1/assets/js/datatables-simple-demo.js}"></script>
+
 
   <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
 </head>
@@ -26,7 +27,7 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
   <nav th:fragment="html_nav" class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/admin/">QUẢN TRỊ</a>
+    <a class="navbar-brand ps-3" th:href="@{/admin/}">QUẢN TRỊ</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
@@ -57,11 +58,11 @@
       <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
           <div class="sb-sidenav-menu">
               <div class="nav">
-                  <a class="nav-link" href="account.html">
+                  <a class="nav-link" th:href="@{/admin/account}">
                       <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                       Quản lý người dùng
                   </a>
-                  <a class="nav-link" href="donation.html">
+                  <a class="nav-link" th:href="@{/admin/donation}">
                       <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                       Quản lý đợt quyên góp
                   </a>
@@ -85,13 +86,13 @@
                 <label for="addname"
                        class="col-form-label">Mã đợt quyên góp:</label>
                 <input type="text" class="form-control"
-                       id="addname" name="code" value="QP001" readonly="readonly">
+                       id="addname" name="code" th:value="${donation.code}"readonly="readonly">
               </div>
               <div class="col-6">
                 <label for="addcost"
                        class="col-form-label">Tên đợt quyên góp:</label>
                 <input type="text" class="form-control"
-                       id="addcost" name="name" value="Hỗ trợ vì người nghèo" readonly="readonly">
+                       id="addcost" name="name" th:value="${donation.name}" readonly="readonly">
               </div>
             </div>
             <div class="row">
@@ -99,13 +100,13 @@
                 <label for="addname"
                        class="col-form-label">Ngày bắt đầu:</label>
                 <input type="date" class="form-control"
-                       id="addname" name="start" value="10/10/2023" readonly="readonly">
+                       id="addname" name="start" th:value="${donation.startDate}" readonly="readonly">
               </div>
               <div class="col-6">
                 <label for="addcost"
                        class="col-form-label">Ngày kết thúc:</label>
                 <input type="date" class="form-control"
-                       id="addcost" name="end" value="12/10/2023"readonly="readonly">
+                       id="addcost" name="end" th:value="${donation.endDate}" readonly="readonly">
               </div>
             </div>
             <div class="row">
@@ -113,19 +114,23 @@
                 <label for="addname"
                        class="col-form-label">Tổng tiền quyên góp:</label>
                 <input type="text" class="form-control"
-                       id="addname" name="start" value="20,000 VND" readonly="readonly">
+                       id="addname" name="start" th:value="${donation.money}" readonly="readonly" >
               </div>
               <div class="col-6">
                 <label for="addcost"
                        class="col-form-label">Trạng thái:</label>
-                <input type="text" class="form-control"
-                       id="addcost" name="end" value="Mới tạo" readonly="readonly">
-                <input type="text" class="form-control"
-                       id="addcost" name="end" value="Đang quyên góp" readonly="readonly">
-                <input type="text" class="form-control"
-                       id="addcost" name="end" value="Kết thúc quyên góp" readonly="readonly">
-                <input type="text" class="form-control"
-                       id="addcost" name="end" value="Đóng quyên góp" readonly="readonly">
+                       <div th:switch="${donation.status}">
+                        <input th:case="0" type="text" class="form-control"
+                        id="addcost" name="end" value="Mới tạo" readonly="readonly">
+                 <input th:case="1" type="text" class="form-control"
+                        id="addcost" name="end" value="Đang quyên góp" readonly="readonly">
+                 <input th:case="2" type="text" class="form-control"
+                        id="addcost" name="end" value="Kết thúc quyên góp" readonly="readonly">
+                 <input th:case="3" type="text" class="form-control"
+                        id="addcost" name="end" value="Đóng quyên góp" readonly="readonly">
+
+                       </div>
+                
               </div>
             </div>
             <div class="row">
@@ -133,17 +138,17 @@
                 <label for="addname"
                        class="col-form-label">Tổ chức:</label>
                 <input type="text" class="form-control"
-                       id="addname" name="tochuc" value="Vì trẻ em" readonly="readonly">
+                       id="addname" name="tochuc" th:value="${donation.organizationName}" readonly="readonly">
               </div>
               <div class="col-6">
                 <label for="addcost"
                        class="col-form-label">Số điện thoại:</label>
                 <input type="number" class="form-control"
-                       id="addcost" name="sdt" value="03800092934" readonly="readonly">
+                       id="addcost" name="sdt" th:value="${donation.phoneNumber}" readonly="readonly">
               </div>
               <div class="col-12">
                 <label for="ct_id" class="col-form-label">Nội dung:</label>
-                <textarea name="noidung" class="form-control" cols="50" readonly="readonly"></textarea>
+                <textarea th:text="${donation.description}" name="noidung" class="form-control" cols="50" readonly="readonly"></textarea>
               </div>
             </div>
             <!--Detail-->
@@ -166,7 +171,7 @@
               </tfoot>
               <tbody>
               <input type="hidden" th:value="${userDonationList.size()}" id="dodai" />
-              <th>
+              <th:block>
                 <tr>
                   <td>Minh Khương</td>
                   <td>20000</td>
@@ -182,7 +187,7 @@
                         Hủy xác nhận
                   </td>
                 </tr>
-              </th>
+              </th:block>
               </tbody>
             </table>
           </div>

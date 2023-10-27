@@ -17,7 +17,7 @@
 
     <link
       rel="stylesheet"
-      th:href="@{resources/static/admin1/assets/css/styles.css}"
+      th:href="@{/resources/static/admin1/assets/css/styles.css}"
     />
 
     <script
@@ -31,7 +31,7 @@
 
     <script
       <script
-      th:src="@{resources/static/admin1/assets/js/scripts.js}"
+      th:src="@{/resources/static/admin1/assets/js/scripts.js}"
     ></script>
 
     <script
@@ -39,7 +39,7 @@
       crossorigin="anonymous"
     ></script>
     <script
-      th:src="@{resources/static/admin1/assets/js/datatables-simple-demo.js}"
+      th:src="@{/resources/static/admin1/assets/js/datatables-simple-demo.js}"
     ></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
   </head>
@@ -91,13 +91,13 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
           <div class="sb-sidenav-menu">
             <div class="nav">
-              <a class="nav-link" th:href="@{admin/account}">
+              <a class="nav-link" th:href="@{/admin/account}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
                 </div>
                 Quản lý người dùng
               </a>
-              <a class="nav-link" th:href="@{admin/donation}">
+              <a class="nav-link" th:href="@{/admin/donation}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
                 </div>
