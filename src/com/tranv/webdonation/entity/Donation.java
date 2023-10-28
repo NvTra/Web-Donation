@@ -59,4 +59,8 @@ public class Donation {
 
 	@OneToMany(mappedBy = "donation")
 	private List<UserDonation> userDonations;
+
+	public void totalMoney(int balance) {
+		this.money += balance;
+	}
 }

@@ -1,6 +1,5 @@
 package com.tranv.webdonation.dao;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -12,11 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.tranv.webdonation.entity.Donation;
+import com.tranv.webdonation.entity.UserDonation;
 
 @Repository
 public class DonationDAOImpl implements DonationDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	@Override
+	public UserDonation findbyId(int userDonationId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		return currentSession.get(UserDonation.class, userDonationId);
+	}
 
 	@Override
 	public void saveDonation(Donation donation) {

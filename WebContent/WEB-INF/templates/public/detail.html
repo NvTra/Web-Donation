@@ -10,7 +10,6 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="Free-Template.co" />
-    <link rel="shortcut icon" href="ftco-32x32.png" />
 
     <link
       rel="stylesheet"
@@ -214,9 +213,8 @@
 
               <div class="pt-5">
                 <h4 class="mb-5">Danh sách quyên góp</h4>
-                <!--            <h3 class="mb-5" th:text="${userDonationList.size()}+${'  donation'}"> </h3>-->
-                <ul class="comment-list">
-                  <th>
+                <ul th:if="${userDonationList.size()>0}" class="comment-list">
+                  <th:block th:each="user : ${userDonationList}">
                     <li class="comment">
                       <div class="vcard bio">
                         <img
@@ -225,15 +223,16 @@
                         />
                       </div>
                       <div class="comment-body">
-                        <h3></h3>
+                        <h3 th:text="${user.name}"></h3>
                         <div
+                          th:text="${user.created}"
                           class="meta"
                           style="color: #373b3e !important"
                         ></div>
-                        <p></p>
+                        <p th:text="${user.money}">VNĐ</p>
                       </div>
                     </li>
-                  </th>
+                  </th:block>
                 </ul>
               </div>
             </div>
@@ -243,38 +242,50 @@
                 <ul class="list-unstyled pl-3 mb-0">
                   <li class="mb-2">
                     <strong class="text-black">Mã đợt quyên góp:</strong>
+                    <span th:text="${donation.code}"> vnđ</span>
                   </li>
                   <li class="mb-2">
                     <strong class="text-black">Tên đợt quyên góp:</strong>
+                    <span th:text="${donation.name}"></span>
                   </li>
                   <li class="mb-2">
                     <strong class="text-black">Ngày bắt đầu:</strong>
+                    <span th:text="${donation.startDate}"></span>
                   </li>
                   <li class="mb-2">
                     <strong class="text-black">Ngày kết thúc:</strong>
+                    <span th:text="${donation.endDate}"></span>
                   </li>
                   <li class="mb-2">
                     <strong class="text-black">Cá nhân/Tổ chức:</strong>
+                    <span th:text="${donation.organizationName}"></span>
                   </li>
                   <li class="mb-2">
                     <strong class="text-black">Số điện thoại: </strong>
+                    <span th:text="${donation.phoneNumber}"></span>
                   </li>
                   <li class="mb-2">
                     <strong class="text-black"
                       >Tổng tiền quyên góp nhận được:</strong
                     >
+                    <span th:text="${donation.money}"></span>
                   </li>
                   <li class="mb-2">
                     <strong class="text-black">Trạng thái:</strong>
-                    <span>Mới tạo</span>
-                    <span>Đang quyên góp</span>
-                    <span>Kết thúc quyên góp</span>
-                    <span>Đóng quyên góp</span>
+                    <div th:switch="${donation.status}" class="d-inline">
+                      <span th:case="0">Mới tạo</span>
+                      <span th:case="1">Đang quyên góp</span>
+                      <span th:case="2">Kết thúc quyên góp</span>
+                      <span th:case="3">Đóng quyên góp</span>
+                    </div>
                   </li>
                 </ul>
               </div>
 
-              <div class="bg-light p-3 border rounded">
+              <div
+                th:if="${donation.status==1}"
+                class="bg-light p-3 border rounded"
+              >
                 <button
                   type="button"
                   style="color: white"
@@ -312,7 +323,12 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form method="post" action="/donation/add">
+              <form
+                method="post"
+                th:action="@{/createDonate}"
+                action="#"
+                th:object="${userDonate}"
+              >
                 <div class="modal-body">
                   <div class="row">
                     <div class="col-12">
@@ -343,14 +359,8 @@
                         class="form-control"
                         placeholder=""
                         id="addname"
-                        name="idUser"
-                      />
-                      <input
-                        type="hidden"
-                        class="form-control"
-                        placeholder=""
-                        id="addname"
-                        name="idDonation"
+                        name="donation.id"
+                        th:value="${donation.id}"
                         required
                       />
 
@@ -384,11 +394,6 @@
           </div>
         </div>
       </section>
-
-      <footer
-        th:replace="public/fragments :: footer"
-        class="site-footer"
-      ></footer>
     </div>
   </body>
 </html>

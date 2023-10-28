@@ -167,7 +167,7 @@
           <ul class="job-listings mb-5">
             <th th:each="category : ${donations}">
               <li
-                style="margin-bottom: 20px"
+                style="margin-bottom: 10px"
                 class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center"
               >
                 <div
@@ -213,31 +213,28 @@
                     <span th:text="${category.organizationName}"></span><br />
                     <strong th:text="${category.phoneNumber}"></strong><br />
                   </div>
-                  <div class="job-listing-meta custom-width w-20">
-                    <p
-                      style="margin-top: 20px"
+                  <div th:if="${category.status!=1}" class="col-2"></div>
+                  <div
+                    th:if="${category.status==1}"
+                    class="job-listing-meta custom-width w-20 col-2"
+                  >
+                    <button
+                      type="button"
+                      style="width: 120px"
                       class="btn btn-primary py-2"
-                      data-toggle="modal"
+                      data-bs-toggle="modal"
+                      th:data-bs-target="'#exampleModal'+${category.id}"
                     >
                       Quyên góp
-                    </p>
-                    <p
-                      style="
-                        margin-top: 20px;
-                        background-color: white !important;
-                      "
-                      class="btn py-2"
-                    >
-                      <span style="color: white">Quyên góp</span>
-                    </p>
+                    </button>
                   </div>
                 </div>
               </li>
               <!-- Modal -->
               <div
                 class="modal fade"
+                th:id="'exampleModal' + ${category.id}"
                 tabindex="-1"
-                role="dialog"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
               >
@@ -245,7 +242,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">
-                        Quyên góp: <span></span>
+                        Quyên góp
                       </h5>
                       <button
                         type="button"
@@ -256,7 +253,12 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <form method="post">
+                    <form
+                      method="post"
+                      th:action="@{/createDonate}"
+                      action="#"
+                      th:object="${userDonate}"
+                    >
                       <div class="modal-body">
                         <div class="row">
                           <div class="col-12">
@@ -282,19 +284,14 @@
                               name="money"
                               required
                             />
+
                             <input
                               type="hidden"
                               class="form-control"
                               placeholder=""
                               id="addname"
-                              name="idUser"
-                            />
-                            <input
-                              type="hidden"
-                              class="form-control"
-                              placeholder=""
-                              id="addname"
-                              name="idDonation"
+                              name="donation.id"
+                              th:value="${category.id}"
                               required
                             />
 
@@ -333,11 +330,11 @@
                 </div>
               </div>
             </th>
-            <script>
-              function detail(id) {
-                window.location = "/donation/detail/" + id;
-              }
-            </script>
+            <!--
+				function detail(id) {
+					window.location = "/donation/detail/" + id;
+				}
+			</script>-->
           </ul>
           <div class="row pagination-wrap" th:if="${totalPages > 1}">
             <ul class="pagination ml-auto">

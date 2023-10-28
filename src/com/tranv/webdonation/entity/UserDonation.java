@@ -33,7 +33,7 @@ public class UserDonation {
 	private String created;
 
 	@Column(name = "money")
-	private float money;
+	private int money;
 
 	@Column(name = "status")
 	private int status;

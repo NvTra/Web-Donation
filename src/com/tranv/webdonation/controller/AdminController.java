@@ -16,8 +16,10 @@ import com.tranv.webdonation.dto.CreaterUserDTO;
 import com.tranv.webdonation.entity.Donation;
 import com.tranv.webdonation.entity.Role;
 import com.tranv.webdonation.entity.User;
+import com.tranv.webdonation.entity.UserDonation;
 import com.tranv.webdonation.service.DonationService;
 import com.tranv.webdonation.service.RoleService;
+import com.tranv.webdonation.service.UserDonationService;
 import com.tranv.webdonation.service.UserService;
 
 @Controller
@@ -30,6 +32,8 @@ public class AdminController {
 
 	@Autowired
 	private DonationService donationService;
+	@Autowired
+	private UserDonationService userDonationService;
 
 	@RequestMapping("/")
 	public String adminHome() {
@@ -88,7 +92,9 @@ public class AdminController {
 	@GetMapping("/detailDonation/{donationId}")
 	public String detailDonation(@PathVariable("donationId") int donationId, Model model) {
 		Donation donation = donationService.findById(donationId);
+		List<UserDonation> userDonations = userDonationService.findByDonationId(donationId);
 		model.addAttribute("donation", donation);
+		model.addAttribute("userDonationList", userDonations);
 		return "admin/detail";
 	}
 
