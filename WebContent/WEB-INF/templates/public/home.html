@@ -90,12 +90,6 @@
   </head>
 
   <body id="top">
-    <div id="overlayer"></div>
-    <div class="loader">
-      <div class="spinner-border text-primary" role="status">
-        <span class="sr-only">Loading...</span>
-      </div>
-    </div>
     <div
       th:if="${msg}"
       class="toast"
@@ -121,21 +115,24 @@
     </div>
 
     <div class="site-wrap">
-      <div class="site-mobile-menu site-navbar-target">
-        <div class="site-mobile-menu-header">
-          <div class="site-mobile-menu-close mt-3">
-            <span class="icon-close2 js-menu-toggle"></span>
-          </div>
-        </div>
-        <div class="site-mobile-menu-body"></div>
-      </div>
-      <!-- .site-mobile-menu -->
-
       <!-- NAVBAR -->
       <header class="site-navbar mt-3">
         <div class="container-fluid">
           <div class="row align-items-center">
-            <div class="site-logo col-6"><a href="/">Website Quyên Góp</a></div>
+            <div class="site-logo col-6">
+              <a th:href="@{/}">Website Quyên Góp</a>
+            </div>
+            <div
+              class="right-cta-menu text-right d-flex aligin-items-center col-6"
+            >
+              <div class="ml-auto">
+                <a
+                  th:href="@{/admin/}"
+                  class="btn btn-primary border-width-2 d-none d-lg-inline-block"
+                  ><span class="mr-2 icon-lock_outline"></span>ADMIN</a
+                >
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -143,7 +140,7 @@
       <!-- HOME -->
       <section
         class="section-hero overlay inner-page bg-image"
-        style="background-image: url('images/hero_1.jpg')"
+        th:style="'background-image: url('+@{/resources/static/user/assets/images/hero_1.jpg}+')'"
         id="home-section"
       >
         <div class="container">
@@ -247,7 +244,7 @@
                       <button
                         type="button"
                         class="close"
-                        data-dismiss="modal"
+                        data-bs-dismiss="modal"
                         aria-label="Close"
                       >
                         <span aria-hidden="true">&times;</span>
@@ -311,7 +308,7 @@
                           <button
                             type="button"
                             class="btn btn-secondary"
-                            data-dismiss="modal"
+                            data-bs-dismiss="modal"
                           >
                             Đóng
                           </button>
